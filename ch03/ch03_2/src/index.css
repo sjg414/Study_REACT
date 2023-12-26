@@ -1,0 +1,10 @@
+/* tailwindCSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @fontsource material-icons */
+.material-icons {
+  font-family: 'Material Icons';
+  display: inline-block;
+}
