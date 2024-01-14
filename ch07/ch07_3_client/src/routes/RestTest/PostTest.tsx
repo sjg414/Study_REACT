@@ -1,8 +1,30 @@
-export default function CopyMe() {
+//컬렉션에 데이터 저장
+import {useState, useCallback} from 'react'
+import {post} from '../../server'
+import * as D from '../../data'
+
+export default function PostTest() {
+  const [data, setData] = useState<object>({})
+  const [errorMessage, setErrorMesage] = useState<string | null>(null)
+
+  const postTest = useCallback(() => {
+    post('/test', D.makeRandomCard())
+      .then(res => res.json())
+      .then(data => setData(data))
+      .catch(error => setErrorMesage(error.message))
+  }, [])
+
   return (
-    <section className="mt-4">
-      <h2 className="font-bold text-5xl text-center">CopyMe</h2>
-      <div className="mt-4"></div>
-    </section>
+    <div className="mb-4">
+      <div className="flex justify-center mb-4">
+        <button onClick={postTest} className="btn btn-primary">
+          POST
+        </button>
+      </div>
+      <div className="mt-4 text-center">
+        <p>data: {JSON.stringify(data, null, 2)}</p>
+        {errorMessage && <p>error: {errorMessage}</p>}
+      </div>
+    </div>
   )
 }

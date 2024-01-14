@@ -1,20 +1,35 @@
 //GET method로 데이터 가져오기
-import {useState, useEffect} from 'react'
+import {useState, useCallback} from 'react'
+import {get} from '../../server'
 
 export default function GetTest() {
   const [data, setData] = useState<object>({})
   const [errorMessage, setErrorMesage] = useState<string | null>(null)
 
-  useEffect(() => {
-    fetch('http://localhost:4000/test')
+  const getAllTest = useCallback(() => {
+    get('/test')
+      .then(res => res.json())
+      .then(data => setData(data))
+      .catch(error => setErrorMesage(error.message))
+  }, [])
+
+  const getTest = useCallback(() => {
+    get('/test/1234')
       .then(res => res.json())
       .then(data => setData(data))
       .catch(error => setErrorMesage(error.message))
   }, [])
 
   return (
-    <div>
-      <p className="text-2xl text-center text-bold">GetTest</p>
+    <div className="mb-4">
+      <div className="flex justify-center mb-4">
+        <button onClick={getAllTest} className="mr-12 btn btn-primary">
+          GET ALL
+        </button>
+        <button onClick={getTest} className="btn btn-primary">
+          GET id 1234
+        </button>
+      </div>
       <div className="mt-4 text-center">
         <p>data: {JSON.stringify(data, null, 2)}</p>
         {errorMessage && <p>error: {errorMessage}</p>}
