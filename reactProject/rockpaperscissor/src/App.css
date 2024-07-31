@@ -1,0 +1,46 @@
+/* .bixBox {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 30px 0px 20px;
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.youBox {
+  border: 4px solid black;
+  width: 600px;
+  height: 600px;
+  padding: 10px;
+}
+
+.computerBox {
+  border: 4px solid black;
+  width: 600px;
+  height: 600px;
+  padding: 10px;
+}
+
+.buttonBox {
+  display: flex;
+  justify-content: center;
+}
+
+.buttonBox button {
+  margin: 10px;
+}
+
+.resultBox {
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+} */
+
+.box {
+  border: 1px solid black;
+  width: 500px;
+}
+
+.item-img {
+  width: 400px;
+}
