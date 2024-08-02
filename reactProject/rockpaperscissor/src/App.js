@@ -26,103 +26,81 @@ const choice = {
 };
 
 function App() {
-  // const [yourThing, setyourThing] = useState(0); //you의 가위 바위 보 상태 관리
-  // const [computerThing, setcomputerThing] = useState(0); //computer의 가위 바위 보 상태 관리
-  // const [yourResult, setyourResult] = useState("TIE"); //you의 승패 결과
-  // const [computerResult, setcomputerResult] = useState("TIE"); //computer의 승패 결과
-  // const [result, setResult] = useState(""); //you의 승패 결과
+  const [userSelect, setUserSelect] = useState(null); //user가 선택한 값 state
+  const [computerSelect, setComputerSelect] = useState(null); //computer가 선택한 값 state
+  const [result, setResult] = useState(""); //결과 state
+  const [result2, setResult2] = useState("");
 
-  // //가위 바위 보 버튼 클릭 시
-  // const youClickThing = (value) => {
-  //   computerRandomThing(); //computer 랜덤값 함수 실행
-  //   setyourThing(value); //클릭 한 버튼 값으로 상태 변경
-
-  //   //승패결과 판정
-  //   if (yourThing === computerThing) {
-  //     setyourResult("TIE");
-  //     setcomputerResult("TIE");
-  //     setResult("TIE");
-  //   } else if (yourThing === 0 && computerThing === 1) {
-  //     setyourResult("LOSER");
-  //     setcomputerResult("WINNER");
-  //     setResult("LOSE");
-  //   } else if (yourThing === 0 && computerThing === 2) {
-  //     setyourResult("WINNER");
-  //     setcomputerResult("LOSER");
-  //     setResult("WIN");
-  //   } else if (yourThing === 1 && computerThing === 0) {
-  //     setyourResult("WINNER");
-  //     setcomputerResult("LOSER");
-  //     setResult("WIN");
-  //   } else if (yourThing === 1 && computerThing === 2) {
-  //     setyourResult("LOSER");
-  //     setcomputerResult("WINNER");
-  //     setResult("LOSE");
-  //   } else if (yourThing === 2 && computerThing === 0) {
-  //     setyourResult("LOSER");
-  //     setcomputerResult("WINNER");
-  //     setResult("LOSE");
-  //   } else {
-  //     setyourResult("WINNER");
-  //     setcomputerResult("LOSER");
-  //     setResult("WIN");
-  //   }
-  // };
-
-  // //computer 랜덤값 생성( 0~2)
-  // const computerRandomThing = () => {
-  //   let RandomValue = Math.floor(Math.random() * 3);
-  //   setcomputerThing(RandomValue);
-  // };
-  const [userSelect, setUserSelect] = useState(null);
-  const [computerSelect, setComputerSelect] = useState(null);
-
+  //user가 버튼 클릭 시(가위 바위 보 선택 시)
   const play = (userChoice) => {
-    setUserSelect(choice[userChoice]);
-    let computerChoice = randomChoice();
-    setComputerSelect(computerChoice);
+    setUserSelect(choice[userChoice]); //user 값 변경
+    let computerChoice = randomChoice(); //computer 값 랜덤 선택
+    setComputerSelect(computerChoice); //computer 값 변경
+    let resultValue = judgement(choice[userChoice], computerChoice);
+    setResult(resultValue); //결과 판단
+    if (resultValue === "tie") setResult2("tie");
+    else setResult2(resultValue === "win" ? "winner" : "loser");
   };
 
+  //computer 값 랜덤 선택
   const randomChoice = () => {
     let itemArray = Object.keys(choice); //객체의 키값만 뽑아서 array로 만들어주는 함수
-    let randomItem = Math.floor(Math.random() * itemArray.length);
-    let final = itemArray[randomItem];
+    let randomItem = Math.floor(Math.random() * itemArray.length); // item 배열 크기 만큼 정수의 랜덤값 생성
+    let final = itemArray[randomItem]; //해당 인덱스의 키 값 선택
     return choice[final];
   };
 
+  //결과 판단
+  const judgement = (user, computer) => {
+    //user와 computer 선택 값 받기
+    /*
+    user와 computer가 같을 시 tie
+    user "Rock"이고, computer가 "Scissors"이면 "win"
+                    computer가 "Paper"이면 "lose"
+    user "Scissors"이고, computer가 "Rock"이면 "lose"
+                        computer가 "Paper"이면 "win"
+    user "Paper"이고, computer가 "Rock"이면 "win"
+                     computer가 "Scissors"이면 "lose"  
+     */
+    if (user.name === computer.name) {
+      return "tie";
+    } else if (user.name === "Rock")
+      return computer.name === "Scissors" ? "win" : "lose";
+    else if (user.name === "Scissors")
+      return computer.name === "Paper" ? "win" : "lose";
+    else if (user.name === "Paper")
+      return computer.name === "Rock" ? "win" : "lose";
+  };
+
   return (
-    // <div>
-    //   <div className="bixBox">
-    //     <div className="youBox">
-    //       <p>you</p>
-    //       yourThing : {yourThing}
-    //       <p>{yourResult}</p>
-    //     </div>
-    //     <div className="computerBox">
-    //       <p>computer</p>
-    //       computerThing : {computerThing}
-    //       <p>{computerResult}</p>
-    //     </div>
-    //   </div>
-    //   <div className="buttonBox">
-    //     <button onClick={() => youClickThing(0)}>가위</button>
-    //     <button onClick={() => youClickThing(1)}>바위</button>
-    //     <button onClick={() => youClickThing(2)}>보</button>
-    //   </div>
-    //   <div className="resultBox">
-    //     <p>{result}</p>
-    //   </div>
-    // </div>
     <div>
       <div className="main">
-        <Box title="You" item={userSelect} />
-        <Box title="Computer" item={computerSelect} />
+        <Box title="You" item={userSelect} result={result} />
+        <Box title="Computer" item={computerSelect} result={result} />
       </div>
       <div className="main">
         {/* onClick에 함수를 넣을 때는 콜백 형식으로 넣어줘야한다.(함수만 넣을 경우 렌더링 시 바로 실행된다.) */}
-        <button onClick={() => play("scissors")}>가위</button>
-        <button onClick={() => play("rock")}>바위</button>
-        <button onClick={() => play("paper")}>보</button>
+        <img
+          className="btn-img"
+          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FHfURw%2FbtqXKvOTNWK%2FgWTwPXEg9QzSV0ilOuwuak%2Fimg.png"
+          onClick={() => play("scissors")}
+          alt="Scissors"
+        />
+        <img
+          className="btn-img"
+          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FpSJwo%2FbtqXJV1lACE%2Fnx5XrxkCLWXh9UsnoS8vbK%2Fimg.png"
+          onClick={() => play("rock")}
+          alt="Rock"
+        />
+        <img
+          className="btn-img"
+          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbmjB2s%2FbtqXHhp6kpG%2FTH14W4U612SxKo9uuR2sB0%2Fimg.png"
+          onClick={() => play("paper")}
+          alt="Paper"
+        />
+      </div>
+      <div className={`result2 ${result}`}>
+        <h1>{result2}</h1>
       </div>
     </div>
   );
