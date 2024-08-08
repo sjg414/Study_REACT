@@ -33,3 +33,11 @@ body {
 .weatherButton-box Button {
   margin: 10px;
 }
+
+.weather-box h2 {
+  color: greenyellow;
+}
+
+.weather-box h3 {
+  color: aqua;
+}
