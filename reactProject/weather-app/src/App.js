@@ -16,9 +16,10 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 function App() {
   const [weather, setWeather] = useState(null); //날씨 상태 관리
-  const [city, setCity] = useState(""); //city 상태 관리
+  const [city, setCity] = useState(""); //city 상태 관리(버튼 클릭 시 선택된 도시)
   const [loading, setLoding] = useState(false); //spinner loading 상태 관리
   const cities = ["paris", "new york", "tokyo", "seoul"]; //버튼에 쓰일 도시 항목 관리
+  const [apiErr, setApiErr] = useState(""); //api error 관리
 
   //현재 위치 가져오는 함수
   const getCurrentLocation = () => {
@@ -32,22 +33,34 @@ function App() {
 
   //날씨 api 호출 해 데이터 받기
   const getWeatherByCurrentLocation = async (lat, lon) => {
-    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=4f44a25e2fa5798241e23cafa2d53c7d&units=metric`;
-    setLoding(true);
-    let response = await fetch(url);
-    let data = await response.json();
-    setWeather(data);
-    setLoding(false);
+    try {
+      let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=4f44a25e2fa5798241e23cafa2d53c7d&units=metric`;
+      setLoding(true);
+      let response = await fetch(url);
+      let data = await response.json();
+      setWeather(data);
+      setLoding(false);
+    } catch (e) {
+      console.log(e);
+      setApiErr(e.message);
+      setLoding(false);
+    }
   };
 
   //city의 날씨 정보 가져오기
   const getWeatherByCity = async () => {
-    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=4f44a25e2fa5798241e23cafa2d53c7d&units=metric`;
-    setLoding(true);
-    let response = await fetch(url);
-    let data = await response.json();
-    setWeather(data);
-    setLoding(false);
+    try {
+      let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=4f44a25e2fa5798241e23cafa2d53c7d&units=metric`;
+      setLoding(true);
+      let response = await fetch(url);
+      let data = await response.json();
+      setWeather(data);
+      setLoding(false);
+    } catch (e) {
+      console.log(e);
+      setApiErr(e.message);
+      setLoding(false);
+    }
   };
 
   //componentdidmount, componentdidupdate(city)
@@ -63,11 +76,17 @@ function App() {
         <div className="container">
           <ClipLoader color="#f88c6b" loading={loading} size={150} />
         </div>
-      ) : (
+      ) : !apiErr ? (
         <div className="container">
           <WeatherBox weather={weather} />
-          <WeatherButton cities={cities} setCity={setCity} />
+          <WeatherButton
+            cities={cities}
+            setCity={setCity}
+            selectedCity={city}
+          />
         </div>
+      ) : (
+        apiErr
       )}
     </div>
   );
