@@ -1,13 +1,16 @@
+/* 메뉴바 */
 .menubar {
   list-style-type: none;
   display: flex;
   flex-wrap: wrap;
 }
 
+/* 메뉴바 list */
 .menubar li {
   margin: 10px;
 }
 
+/* 메뉴바 컨테이너 */
 .menubar-container {
   display: flex;
   justify-content: center;
@@ -15,10 +18,12 @@
   flex-direction: column;
 }
 
+/* 메뉴바 h1 */
 .menubar-container h1 {
   color: red;
 }
 
+/* 제품 영역 */
 .products-div {
   width: 25vw;
   height: 50vh;
@@ -26,6 +31,7 @@
   text-align: center;
 }
 
+/* 제품 컨테이너 */
 .products-container {
   display: flex;
   justify-content: center;
@@ -35,11 +41,13 @@
   height: 70vh;
 }
 
+/* main */
 .main-container {
   width: 100vw;
   height: 100vh;
 }
 
+/* 제품 사진 */
 .product-img {
   display: block;
   margin: auto;
@@ -47,6 +55,15 @@
   height: 400px;
 }
 
+/* 로그인버튼 */
 .login-btn {
-  float: right;
+  margin-left: 800px;
+}
+
+/* 로그인 컨테이너 */
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  width: 90vw;
 }
