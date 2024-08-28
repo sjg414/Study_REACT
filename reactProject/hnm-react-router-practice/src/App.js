@@ -1,24 +1,39 @@
-//Homepage : 제품들을 렌더링
-//Loginpage : 로그인화면
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Navigate, Route, Routes, useFetcher } from "react-router-dom";
-import Homepage from "./page/Homepage";
-import Loginpage from "./page/Loginpage";
-import { useState } from "react";
-import Userpage from "./page/Userpage";
+import { Route, Routes } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Menubar from "./component/Menubar";
+import ProductAll from "./page/ProductAll";
+import Login from "./page/Login";
+import ProductDetail from "./page/ProductDetail";
+
+/*
+1. 전체상품페이지, 로그인, 상품상세페이지
+2. 전체 상품페이지에서는 전체 상품을 볼 수 있다.
+3. 로그인 버튼을 누르면 로그인 페이지가 나온다.
+3. 상품디테일을 눌렀으나, 로그인이 안되있을 경우 로그인 페이지가 먼저 나온다.
+4. 로그인이 되어 있을 경우에는 상품 디테일 페이지를 볼 수 있다.
+5.로그아웃 버튼을 클릭하면 로그아웃이 된다.
+5. 로그아웃이 되면 상품 디테일페이지를 볼 수 없다.(다시 로그인 페이지가 보임)
+6. 로그인/로그아웃 표시
+7. 상품을 검색할 수 있다. */
 
 function App() {
-  const [authenticate, setAuthenticate] = useState(false);
+  const [authenticate, setAuthenticate] = useState(false); // true : 로그인 O, false: 로그인 x
 
-  const PrivateRoute = () => {
-    return authenticate ? <Userpage /> : <Navigate to="/login" />;
-  };
+  useEffect(() => {
+    console.log("auth", authenticate);
+  }, [authenticate]);
   return (
     <div className="main-container">
+      <Menubar authenticate={authenticate} setAuthenticate={setAuthenticate} />
       <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/login" element={<Loginpage />} />
+        <Route path="/" element={<ProductAll />} />
+        <Route
+          path="/login"
+          element={<Login setAuthenticate={setAuthenticate} />}
+        />
+        <Route path="/products/:id" element={<ProductDetail />} />
       </Routes>
     </div>
   );
