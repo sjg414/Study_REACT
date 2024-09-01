@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "../component/ProductCard";
 import { Col, Container, Row } from "react-bootstrap";
+import { useSearchParams } from "react-router-dom";
 
 const ProductAll = () => {
   const [productList, setProductList] = useState([]); //productList 상태관리
+  const [query, setQuery] = useSearchParams();
 
-  //db.json에서 product data 가져오기
+  //db.json에서 product data 가져오기, search 기능 추가
   const getProducts = async () => {
-    let url = `http://localhost:4000/products`;
+    let searchQuery = query.get("q") || ""; //search keyword
+    let url = `http://localhost:4000/products?q=${searchQuery}`;
     let response = await fetch(url);
     let data = await response.json();
     setProductList(data);
@@ -16,7 +19,7 @@ const ProductAll = () => {
   //api 호출
   useEffect(() => {
     getProducts();
-  }, []);
+  }, [query]);
 
   return (
     <div>

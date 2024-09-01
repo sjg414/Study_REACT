@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Menubar from "./component/Menubar";
 import ProductAll from "./page/ProductAll";
 import Login from "./page/Login";
-import ProductDetail from "./page/ProductDetail";
+import PrivateRoute from "./route/PrivateRoute";
 
 /*
 1. 전체상품페이지, 로그인, 상품상세페이지
@@ -33,7 +33,10 @@ function App() {
           path="/login"
           element={<Login setAuthenticate={setAuthenticate} />}
         />
-        <Route path="/products/:id" element={<ProductDetail />} />
+        <Route
+          path="/product/:id"
+          element={<PrivateRoute authenticate={authenticate} />}
+        />
       </Routes>
     </div>
   );

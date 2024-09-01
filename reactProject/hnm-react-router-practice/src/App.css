@@ -15,6 +15,10 @@
   justify-content: center;
 }
 
+.menu-logo img {
+  cursor: pointer;
+}
+
 /* 로그인 컨테이너 */
 .login-container {
   display: flex;
@@ -55,4 +59,17 @@
 .login-form {
   margin: 0 auto;
   width: 600px;
+}
+
+.product-img {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.dropdown button {
+  border: 1px solid black;
+}
+
+.product-data div {
+  margin: 20px 0;
 }
