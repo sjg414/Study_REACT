@@ -10,7 +10,7 @@ const ProductAll = () => {
   //db.json에서 product data 가져오기, search 기능 추가
   const getProducts = async () => {
     let searchQuery = query.get("q") || ""; //search keyword
-    let url = `http://localhost:4000/products?q=${searchQuery}`;
+    let url = `https://my-json-server.typicode.com/sjg414/hnm-project/products?q=${searchQuery}`;
     let response = await fetch(url);
     let data = await response.json();
     setProductList(data);

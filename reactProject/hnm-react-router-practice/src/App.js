@@ -1,7 +1,7 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Route, Routes } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Menubar from "./component/Menubar";
 import ProductAll from "./page/ProductAll";
 import Login from "./page/Login";
@@ -21,9 +21,6 @@ import PrivateRoute from "./route/PrivateRoute";
 function App() {
   const [authenticate, setAuthenticate] = useState(false); // true : 로그인 O, false: 로그인 x
 
-  useEffect(() => {
-    console.log("auth", authenticate);
-  }, [authenticate]);
   return (
     <div className="main-container">
       <Menubar authenticate={authenticate} setAuthenticate={setAuthenticate} />

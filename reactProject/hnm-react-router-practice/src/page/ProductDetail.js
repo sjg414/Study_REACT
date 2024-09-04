@@ -10,16 +10,14 @@ const ProductDetail = () => {
 
   //상품 정보 api 호출해서 받기
   const getProductDetail = async () => {
-    let url = `http://localhost:4000/products/${id}`;
+    let url = `https://my-json-server.typicode.com/sjg414/hnm-project/products/${id}`;
     let response = await fetch(url);
     let data = await response.json();
-    console.log(data);
     setProduct(data);
   };
 
   //DropDown text change
   const changeDropText = (text) => {
-    console.log("drop? ", text);
     setDropText(text);
   };
 

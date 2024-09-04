@@ -2,11 +2,18 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMagnifyingGlass,
+  faTimes,
+  faBars,
+} from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 const Menubar = ({ authenticate, setAuthenticate }) => {
   const [loginText, setLoginText] = useState("로그인"); //로그인, 로그아웃 상태관리
+  const [display, setDisplay] = useState("none");
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 768px)" }); //mobile responsive
   const navigate = useNavigate();
 
   //메뉴 리스트
@@ -48,10 +55,49 @@ const Menubar = ({ authenticate, setAuthenticate }) => {
 
   return (
     <div>
-      <div>
-        <div className="login-container" onClick={() => goToLogin()}>
-          <FontAwesomeIcon icon={faUser} />
-          <div>{loginText}</div>
+      <div className="top-area">
+        {isTabletOrMobile && (
+          <div>
+            <div className="side-button">
+              <FontAwesomeIcon
+                icon={faBars}
+                onClick={() => {
+                  setDisplay("");
+                }}
+              />
+            </div>
+            <div className="side-menubar" style={{ display: display }}>
+              <div>
+                <ul>
+                  {menuList.map((item) => (
+                    <li
+                      key={item}
+                      onClick={() => {
+                        console.log("item?", item);
+                      }}
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="side-exit">
+                <FontAwesomeIcon
+                  icon={faTimes}
+                  onClick={() => {
+                    setDisplay("none");
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div>
+          <div className="login-container" onClick={() => goToLogin()}>
+            <FontAwesomeIcon icon={faUser} />
+            <div>{loginText}</div>
+          </div>
         </div>
       </div>
       <div className="menu-logo">
@@ -64,30 +110,33 @@ const Menubar = ({ authenticate, setAuthenticate }) => {
           }}
         />
       </div>
-      <div className="menu-area">
-        <ul className="menubar">
-          {menuList.map((item) => (
-            <li
-              key={item}
-              onClick={() => {
-                console.log("item?", item);
+      {!isTabletOrMobile && (
+        <div className="menu-area">
+          <ul className="menubar">
+            {menuList.map((item) => (
+              <li
+                key={item}
+                onClick={() => {
+                  console.log("item?", item);
+                }}
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+
+          <div className="search-area">
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+            <input
+              type="text"
+              placeholder="제품검색"
+              onKeyDown={(event) => {
+                search(event);
               }}
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
-        <div className="search-area">
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
-          <input
-            type="text"
-            placeholder="제품검색"
-            onKeyDown={(event) => {
-              search(event);
-            }}
-          />
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
