@@ -1,6 +1,6 @@
 let initialState = {
-  num: 0, //연락처 갯수
-  contactList: [], //연락처 정보(name, phoneNumber)
+  search: "", //검색 키워드
+  contactArray: [], //연락처 정보(name, phoneNumber)
 };
 
 function reducer(state = initialState, action) {
@@ -11,13 +11,18 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         num: state.num + 1,
-        contactList: [
-          ...state.contactList,
+        contactArray: [
+          ...state.contactArray,
           {
             name: payload.name,
             phoneNumber: payload.phoneNumber,
           },
         ],
+      };
+    case "INPUT_SEARCH": //검색 버튼 클릭 시, 검색 키워드 저장
+      return {
+        ...state,
+        search: payload.search,
       };
     default:
       return { ...state };

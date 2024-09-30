@@ -2,17 +2,28 @@ import React from "react";
 import { Button, Row, Col, Form } from "react-bootstrap";
 
 const SearchBox = ({ setSearchQuery }) => {
+  const [search, setSearch] = useState(""); //검색어 상태 관리
+  const dispatch = useDispatch();
+
+  //검색 버튼 클릭 시 dispatch
+  const searchContact = () => {
+    dispatch({ type: "INPUT_SEARCH", payload: { search } });
+  };
   return (
-    <Row className="searchArea">
-      <Col lg={7}>
+    <Row>
+      <Col>
         <Form.Control
           type="text"
-          placeholder="name"
-          onChange={(event) => setSearchQuery(event.target.value)}
+          placeholder="Enter Name"
+          onChange={(event) => {
+            setSearch(event.target.value);
+          }}
         />
       </Col>
-      <Col lg={2}>
-        <Button variant="primary">Search</Button>
+      <Col>
+        <Button variant="primary" onClick={searchContact}>
+          검색
+        </Button>
       </Col>
     </Row>
   );
