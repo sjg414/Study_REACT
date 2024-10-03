@@ -10,5 +10,5 @@ https://jaegeun-react-weather-app.netlify.app/
 3.H&M 사이트 만들기(json-server api 호출, router)
 https://jaeguen-react-hnm.netlify.app/
 
-4. 연락처 만들기(redux)
+4.연락처 만들기(redux)
 https://jaegeun-react-phonebook.netlify.app/
