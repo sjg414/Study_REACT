@@ -1,0 +1,143 @@
+.NavBar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.NavBar-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 30px;
+}
+
+.login-area {
+  position: relative;
+}
+
+.logo-area img {
+  width: 90px;
+  cursor: pointer;
+}
+
+.login-area {
+  position: absolute;
+  right: 30px;
+  cursor: pointer;
+}
+
+.NavBar-Bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px;
+}
+
+.menuList {
+  position: relative;
+}
+.menuList button {
+  border: none;
+  background-color: inherit;
+  margin: 0 10px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.search-area {
+  position: absolute;
+  right: 20px;
+  border-bottom: 1px solid black;
+}
+
+.search-area input {
+  border: none;
+  font-size: 18px;
+}
+
+.product-area {
+  margin-bottom: 30px;
+}
+
+.product-area p {
+  height: 1em;
+}
+
+.product-area:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.login-form {
+  width: 50%;
+  margin: auto auto;
+}
+
+.product-img {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.product-img img {
+  width: 250px;
+}
+
+.selectDrop {
+  width: 30%;
+}
+
+.product-data div {
+  margin: 20px;
+}
+
+.hide {
+  display: none;
+}
+
+@media screen and (max-width: 1024px) {
+  .hide {
+    display: inline-block;
+  }
+
+  .NavBar-Bottom {
+    display: none;
+  }
+
+  .sideMenu {
+  }
+
+  .sideBtn {
+    position: absolute;
+    left: 10px;
+    cursor: pointer;
+    z-index: 0;
+  }
+
+  .sideMenu-area {
+    position: fixed;
+    background-color: yellowgreen;
+    width: 250px;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1;
+  }
+  .sideMenu-button {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sideMenu button {
+    border: none;
+    background-color: inherit;
+    margin: 10px;
+  }
+
+  .sideExit {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 1;
+  }
+}
