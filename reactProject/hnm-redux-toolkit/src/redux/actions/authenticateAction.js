@@ -3,9 +3,6 @@ import { authenticateActions } from "../reducers/authenticateReducer";
 
 function login(id, password) {
   return async (dispatch, getState) => {
-    let auth = await Promise.resolve(true);
-    console.log("promise?", typeof auth);
-    // dispatch({ type: "LOGIN_SUCCESS", payload: { id, password } });
     dispatch(authenticateActions.loginSuccess({ id, password }));
   };
 }
